@@ -16,13 +16,13 @@ class Calculator {
     formatDisplayNumber(number) {
         const stringNumber = number.toString();
 
-        const integerDigits = parseFloat(stringNumber.split('.')[0])
-        const decimalDigits = stringNumber.split('.')[1]
+        const integerDigits = parseFloat(stringNumber.split('.')[0]);
+        const decimalDigits = stringNumber.split('.')[1];
 
         let integerDisplay;
 
         if (isNaN(integerDigits)) {
-            integerDisplay = ""
+            integerDisplay = "";
         } else {
             integerDisplay = integerDigits.toLocaleString("en", {
                 maximumFractionDigits: 0,
@@ -36,11 +36,11 @@ class Calculator {
         }
     }
 
-    delete(){
+    delete() {
         this.currentOperand = this.currentOperand.toString().slice(0, -1);
     }
 
-    calculator(){
+    calculator() {
         let result;
 
         const _previousOperand = parseFloat(this.previousOperand);
@@ -60,7 +60,7 @@ class Calculator {
                 break;
             case "÷":
                 result = _previousOperand / _currentOperand;
-                break;     
+                break;
         }
 
         this.currentOperand = result;
@@ -68,11 +68,11 @@ class Calculator {
         this.previousOperand = "";
     }
 
-    chooseOperatin(operation){
+    chooseOperation(operation) {
         if (this.currentOperand === "") return;
 
-        if (this.previousOperand !== ""){
-            this.calculator()
+        if (this.previousOperand !== "") {
+            this.calculator();
         }
 
         this.operation = operation;
@@ -87,14 +87,16 @@ class Calculator {
     }
 
     clear() {
-        this.currentOperand = '';
-        this.previousOperand = '';
+        this.currentOperand = "";
+        this.previousOperand = "";
         this.operation = undefined;
     }
 
-    updateDisplay(){
-        this.previousOperandTextElement.innerText = `${this.formatDisplayNumber (this)} ${this.operation || "" }`;
-        this.currentOperandTextElement.innerText = this.formatDisplayNumber(this.currentOperand);
+    updateDisplay() {
+        this.previousOperandTextElement.innerText =
+            `${this.formatDisplayNumber(this.previousOperand)} ${this.operation || ""}`;
+        this.currentOperandTextElement.innerText =
+            this.formatDisplayNumber(this.currentOperand);
     }
 }
 
@@ -112,22 +114,22 @@ for (const numberButton of numberButtons) {
 
 for (const operationButton of operationButtons) {
     operationButton.addEventListener("click", () => {
-        calculator.chooseOperatin(operationButton.innerText);
+        calculator.chooseOperation(operationButton.innerText);
         calculator.updateDisplay();
-    })
+    });
 }
 
-allClearButtons.addEventListener('click', () =>{
+allClearButtons.addEventListener("click", () => {
     calculator.clear();
     calculator.updateDisplay();
 });
 
-equalButtons.addEventListener('click', () =>{
+equalButtons.addEventListener("click", () => {
     calculator.calculator();
     calculator.updateDisplay();
 });
 
-deleteButtons.addEventListener('click', () =>{
+deleteButtons.addEventListener("click", () => {
     calculator.delete();
     calculator.updateDisplay();
-})
+});
